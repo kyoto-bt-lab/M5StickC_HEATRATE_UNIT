@@ -1,6 +1,6 @@
 #include <M5StickC.h>
 #include <Wire.h>
-#include "MAX30100_PulseOximeter.h"
+#include "MAX30100_PulseOximeter.h" //install oxullo/Arduino-MAX30100
 #include "xbm.h" //my bitmap
 
 #define REPORTING_PERIOD_MS     1000
@@ -25,7 +25,7 @@ void onBeatDetected()
     isHeatBeatAvailable = true;
 }
 
-void printHeartBeat(float x){
+void printHeartRate(float x){
     M5.Lcd.fillRect(70, 15, 100, 100,  BLACK);
     if(60 <= x && x <= 100){
         M5.Lcd.setTextColor(goodColor);
@@ -67,7 +67,7 @@ void setup()
     mainColor = M5.Lcd.color565(245, 245, 245); // white smoke
     goodColor = M5.Lcd.color565(0, 250, 154); // medium spring green
     M5.Lcd.drawXBitmap(10, 5, hb1_bmp, hb1_bmp_width, hb1_bmp_height, mainColor);
-    printHeartBeat(0.0);
+    printHeartRate(0.0);
     printSpO2(0);
     
     // Initialize the PulseOximeter instance and register a beat-detected callback
@@ -113,7 +113,7 @@ void loop()
                 M5.Lcd.drawXBitmap(10, 5, hb1_bmp, hb1_bmp_width, hb1_bmp_height, mainColor);
             }
         }
-        printHeartBeat(pox.getHeartRate());
+        printHeartRate(pox.getHeartRate());
         printSpO2(pox.getSpO2());
     }
 }
